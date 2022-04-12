@@ -37,7 +37,7 @@ const DUMMY_DATA = [
 
 export default function ShopScreen({navigation, props}) {
   const renderItem = ({item}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Details', {item: item})}>
+    <TouchableOpacity onPress={() => navigation.navigate('DetailsScreen', {item: item})}>
       <View style={styles.container}>
         <Card>
           <Text style={styles.item}>{item.title}</Text>
