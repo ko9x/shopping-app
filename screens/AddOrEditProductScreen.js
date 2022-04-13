@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import Screen from "../components/UI/Screen";
 
 export default function AddOrEditProductScreen({ navigation, route }) {
   const { titlePreface } = route.params;
@@ -11,9 +12,9 @@ export default function AddOrEditProductScreen({ navigation, route }) {
   }, [titlePreface]);
 
   return (
-    <View>
+    <Screen>
       <Text>Add or Edit Product Screen!</Text>
-    </View>
+    </Screen>
   );
 }
 

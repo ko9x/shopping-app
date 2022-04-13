@@ -119,5 +119,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     backgroundColor: "#ccc",
+    borderBottomEndRadius: 10,
+    borderBottomStartRadius: 10,
   },
 });
