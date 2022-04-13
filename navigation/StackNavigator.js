@@ -69,16 +69,6 @@ const ProductsStackNavigator = ({ navigation }) => {
               }}
             />
           ),
-          headerRight: () => (
-            <Ionicons
-              name="ios-add"
-              size={32}
-              color={Colors.primary}
-              onPress={() => {
-                navigation.navigate("AddOrEditScreen");
-              }}
-            />
-          ),
         }}
       />
       <Stack.Screen name="AddOrEditScreen" component={AddOrEditProductScreen} />
