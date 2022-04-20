@@ -88,7 +88,9 @@ export default function AddOrEditProductScreen({ navigation, route }) {
               )}
               <Text style={styles.label}>Description</Text>
               <TextInput
-                style={styles.input}
+                style={{...styles.input, fontSize: 15}}
+                height={100}
+                multiline
                 onChangeText={handleChange("description")}
                 onBlur={handleBlur("description")}
                 value={values.description}
@@ -109,6 +111,8 @@ export default function AddOrEditProductScreen({ navigation, route }) {
               <Text style={styles.label}>Image Address</Text>
               <TextInput
                 style={styles.input}
+                height={100}
+                multiline
                 onChangeText={handleChange("imageAddress")}
                 onBlur={handleBlur("imageAddress")}
                 value={values.imageAddress}
