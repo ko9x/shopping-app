@@ -14,7 +14,6 @@ export default function AddOrEditProductScreen({ navigation, route }) {
   }, [titlePreface]);
 
   const submitHandler = (values, resetForm) => {
-    console.log("values from handler", values); //@DEBUG
     fetch(
       "https://react-http-max-54195-default-rtdb.firebaseio.com/products.json",
       {
@@ -32,7 +31,6 @@ export default function AddOrEditProductScreen({ navigation, route }) {
     )
       .then((response) => {
         if (response.status === 200) {
-          console.log("response", response.json()); //@DEBUG
           resetForm();
         } else {
           throw new Error("Something went wrong");
@@ -53,7 +51,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
             price: "",
             imageAddress: "",
           }}
-          onSubmit={(values, {resetForm}) => submitHandler(values, resetForm)}
+          onSubmit={(values, { resetForm }) => submitHandler(values, resetForm)}
           validationSchema={yup.object().shape({
             title: yup
               .string()
@@ -78,6 +76,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
             values,
           }) => (
             <View>
+              <Text style={styles.label}>Title</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange("title")}
@@ -87,6 +86,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
               {touched.title && errors.title && (
                 <Text style={styles.error}>{errors.title}</Text>
               )}
+              <Text style={styles.label}>Description</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange("description")}
@@ -96,6 +96,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
               {touched.description && errors.description && (
                 <Text style={styles.error}>{errors.description}</Text>
               )}
+              <Text style={styles.label}>Price</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange("price")}
@@ -105,6 +106,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
               {touched.price && errors.price && (
                 <Text style={styles.error}>{errors.price}</Text>
               )}
+              <Text style={styles.label}>Image Address</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChange("imageAddress")}
@@ -124,6 +126,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+  label: { fontSize: 20 },
   input: {
     borderColor: "black",
     borderWidth: 1,
