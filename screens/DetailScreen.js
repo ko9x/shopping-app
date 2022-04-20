@@ -5,7 +5,7 @@ import Colors from "../constants/Colors";
 
 export default function DetailScreen({ navigation, route, props }) {
   const { item } = route.params;
-  
+
   return (
     <Screen>
       <Card style={{ position: "absolute", top: 5 }}>
@@ -18,7 +18,7 @@ export default function DetailScreen({ navigation, route, props }) {
         <Text style={styles.text}>{item.description}</Text>
       </View>
       <View style={{ ...styles.body, marginTop: 4 }}>
-        <Text style={styles.text}>${item.price.toFixed(2)}</Text>
+        <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
       </View>
       <View style={styles.button}>
         <Button title="Add to cart" />
