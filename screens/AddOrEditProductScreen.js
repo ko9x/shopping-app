@@ -130,6 +130,8 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "black",
     borderWidth: 1,
+    fontSize: 20,
+    paddingLeft: 5,
     marginVertical: 10,
     width: 300,
     height: 50,
