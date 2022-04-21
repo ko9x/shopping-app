@@ -9,6 +9,7 @@ import {
   Button,
   SafeAreaView,
   ImageBackground,
+  Alert
 } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
@@ -36,10 +37,41 @@ export default function ShopScreen({ navigation, route, props }) {
         imageAddress: data[key].imageAddress,
       });
     }
-
     setProducts(arr);
-
   }
+
+  const removeProduct = async (id) => {
+    fetch(`https://react-http-max-54195-default-rtdb.firebaseio.com/products/${id}.json`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      if (response.status === 200) {
+        getProducts();
+      } else {
+        throw new Error('Something went wrong')
+      }
+    }).catch((error) => {
+      console.log('error', error); //@DEBUG
+    });
+  };
+
+  const removeProductAlert = (title, id) => {
+    Alert.alert(
+      `Are you sure you want to remove ${title}?`,
+      "This cannot be undone",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => {removeProduct(id)} }
+      ]
+    );
+  }
+ 
 
   useFocusEffect(
     useCallback(() => {
@@ -89,7 +121,9 @@ export default function ShopScreen({ navigation, route, props }) {
                     });
                   }}
                 />
-                <Button title="Remove" />
+                <Button title="Remove" onPress={() => {
+                  removeProductAlert(item.title, item.id)
+                }} />
               </View>
             )}
           </Card>
