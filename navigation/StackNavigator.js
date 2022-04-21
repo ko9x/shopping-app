@@ -16,6 +16,7 @@ const MainStackNavigator = ({ navigation }) => {
       <Stack.Screen
         name="ShopScreen"
         component={ShopScreen}
+        initialParams={{isEditable: false}}
         options={{
           title: "Shop",
           headerLeft: () => (

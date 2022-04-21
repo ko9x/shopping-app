@@ -14,7 +14,6 @@ export default function AddOrEditProductScreen({ navigation, route }) {
   }, [titlePreface]);
 
   const submitHandler = (values, resetForm) => {
-
     const url = item
       ? `https://react-http-max-54195-default-rtdb.firebaseio.com/products/${item.id}.json`
       : "https://react-http-max-54195-default-rtdb.firebaseio.com/products.json";
@@ -36,6 +35,7 @@ export default function AddOrEditProductScreen({ navigation, route }) {
       .then((response) => {
         if (response.status === 200) {
           resetForm();
+          navigation.navigate("ManageProductsScreen");
         } else {
           throw new Error("Something went wrong");
         }
