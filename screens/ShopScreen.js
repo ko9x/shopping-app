@@ -85,6 +85,7 @@ export default function ShopScreen({ navigation, route, props }) {
                   onPress={() => {
                     navigation.navigate("AddOrEditScreen", {
                       titlePreface: "Edit",
+                      item: item
                     });
                   }}
                 />
