@@ -96,10 +96,23 @@ export default function ShopScreen({ navigation, route, props }) {
     }
   }, [isEditable]);
 
+  // navigation.navigate("AddOrEditScreen", {
+  //   titlePreface: "Edit",
+  //   item: item)}
+
+  //   {
+  //     navigation.navigate("AddOrEditScreen", {
+  //       titlePreface: "Edit",
+  //       item: item
+  //     });
+  //   }
+
+  //   navigation.navigate("DetailsScreen", { item: item })
+
   const renderItem = ({ item }) => (
     <SafeAreaView>
       <TouchableOpacity
-        onPress={() => navigation.navigate("DetailsScreen", { item: item })}
+        onPress={() => !isEditable ? navigation.navigate("DetailsScreen", { item: item, itemTitle: item.title }) : navigation.navigate("AddOrEditScreen", {titlePreface: "Edit", item: item})       }
       >
         <View style={styles.container}>
           <Card>
@@ -121,7 +134,7 @@ export default function ShopScreen({ navigation, route, props }) {
                     });
                   }}
                 />
-                <Button title="Remove" onPress={() => {
+                <Button color={'red'} title="Remove" onPress={() => {
                   removeProductAlert(item.title, item.id)
                 }} />
               </View>
