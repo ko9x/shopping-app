@@ -2,21 +2,21 @@ import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
 import Colors from "../constants/Colors";
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { CartContext } from "../store/Cart";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function DetailScreen({ navigation, route, props }) {
   const { item } = route.params;
-
   const { addItemToCart } = useContext(CartContext);
+  const [iconSize, setIconSize] = useState(32);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Ionicons
           name="ios-cart"
-          size={32}
+          size={iconSize}
           color={Colors.primary}
           onPress={() => {
             navigation.navigate("ShoppingCartScreen", { isEditable: true, hasRemoveButton: true });
@@ -24,7 +24,25 @@ export default function DetailScreen({ navigation, route, props }) {
         />
       ),
     })
-  }, [])
+  }, [iconSize]);
+
+  const handleAddItem = (item) => {
+    bumpButton();
+    addItemToCart(item)
+  };
+
+  const bumpButton = () => {
+    setIconSize(37);
+    setTimeout(() => {
+      setIconSize(38);
+    }, 100);
+    setTimeout(() => {
+      setIconSize(40);
+    }, 100);
+    setTimeout(() => {
+      setIconSize(32);
+    }, 200);
+  }
 
   return (
     <Screen>
@@ -42,7 +60,7 @@ export default function DetailScreen({ navigation, route, props }) {
       </View>
       <View style={styles.button}>
         <Button title="Add to cart" onPress={() => {
-          addItemToCart(item);
+          handleAddItem(item);
         }} />
       </View>
     </Screen>
