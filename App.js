@@ -3,15 +3,17 @@ import { StyleSheet, Text, View } from "react-native";
 import ShopScreen from "./screens/ShopScreen";
 import DetailScreen from "./screens/DetailScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import DrawerNavigator from './navigation/DrawerNavigator';
+import DrawerNavigator from "./navigation/DrawerNavigator";
 import OrdersScreen from "./screens/OrdersScreen";
+import {CartProvider} from "./store/Cart.js";
 
 export default function App() {
-
   return (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
+    <CartProvider>
+      <NavigationContainer>
+        <DrawerNavigator />
+      </NavigationContainer>
+    </CartProvider>
   );
 }
 

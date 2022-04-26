@@ -2,9 +2,13 @@ import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
 import Colors from "../constants/Colors";
+import { useContext } from "react";
+import { CartContext } from "../store/Cart";
 
 export default function DetailScreen({ navigation, route, props }) {
   const { item } = route.params;
+
+  const { addItemToCart } = useContext(CartContext);
 
   return (
     <Screen>
@@ -21,7 +25,9 @@ export default function DetailScreen({ navigation, route, props }) {
         <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
       </View>
       <View style={styles.button}>
-        <Button title="Add to cart" />
+        <Button title="Add to cart" onPress={() => {
+          addItemToCart(item);
+        }} />
       </View>
     </Screen>
   );
