@@ -8,6 +8,7 @@ export default function ProductCard(props) {
       <Card>
         <View style={styles.content}>
           <Text style={styles.item}>{props.item.title}</Text>
+          {props.item.quantity && <Text style={styles.item}>{props.item.quantity}</Text>}
           <ImageBackground
             source={{ uri: props.item.imageAddress }}
             style={styles.BGImage}
