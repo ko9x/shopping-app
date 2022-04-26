@@ -11,12 +11,17 @@ export const CartProvider = ({ children }) => {
       addItemToCart: (newItem) => {
         setCartItems((prevItems) => [...prevItems, newItem]);
       },
+      removeItemFromCart: (id) => {
+        let arr = cartItems;
+        const filteredArr = arr.filter((item) => item.id !== id)
+        setCartItems(filteredArr);
+      }
     };
   });
 
   return (
-      <CartContext.Provider value={cartContextContent}>
-          {children}
-      </CartContext.Provider>
-  )
+    <CartContext.Provider value={cartContextContent}>
+      {children}
+    </CartContext.Provider>
+  );
 };

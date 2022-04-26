@@ -7,10 +7,15 @@ import AddOrEditProductScreen from "../screens/AddOrEditProductScreen";
 import Colors from "../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
+import { useContext } from "react";
+import { CartContext } from "../store/Cart";
 
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => {
+
+  const {removeItemFromCart} = useContext(CartContext);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -35,7 +40,7 @@ const MainStackNavigator = ({ navigation }) => {
               size={32}
               color={Colors.primary}
               onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasRemoveButton: true});
+                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasRemoveButton: true, onRemove: removeItemFromCart()});
               }}
             />
           ),

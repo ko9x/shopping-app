@@ -2,13 +2,29 @@ import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
 import Colors from "../constants/Colors";
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { CartContext } from "../store/Cart";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function DetailScreen({ navigation, route, props }) {
   const { item } = route.params;
 
   const { addItemToCart } = useContext(CartContext);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Ionicons
+          name="ios-cart"
+          size={32}
+          color={Colors.primary}
+          onPress={() => {
+            navigation.navigate("ShoppingCartScreen", { isEditable: true, hasRemoveButton: true });
+          }}
+        />
+      ),
+    })
+  }, [])
 
   return (
     <Screen>

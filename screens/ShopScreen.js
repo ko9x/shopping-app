@@ -60,7 +60,7 @@ export default function ShopScreen({ navigation, route, props }) {
       });
   };
 
-  const removeProductAlert = (title, id) => {
+  const removeProductAlert = (id, title) => {
     Alert.alert(
       `Are you sure you want to remove ${title}?`,
       "This cannot be undone",
@@ -123,8 +123,9 @@ export default function ShopScreen({ navigation, route, props }) {
           isEditable={isEditable}
           hasEditButton={true}
           hasRemoveButton={true}
-          onRemoveProduct={removeProductAlert}
+          onRemove={removeProductAlert}
           navigation={navigation}
+          editScreen={"AddOrEditScreen"}
         />
       </TouchableOpacity>
     </SafeAreaView>

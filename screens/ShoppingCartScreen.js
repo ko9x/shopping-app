@@ -1,17 +1,26 @@
-import { useContext } from 'react';
-import { Text } from 'react-native';
+import { useContext } from "react";
+import { FlatList } from "react-native";
 import Screen from "../components/UI/Screen";
-import { CartContext } from '../store/Cart';
+import { CartContext } from "../store/Cart";
+import ProductCard from "../components/ProductCard";
 
 export default function ShoppingCartScreen() {
+  const { cartItems, removeItemFromCart } = useContext(CartContext);
 
-    const {cartItems} = useContext(CartContext)
-
-    console.log('cartItems', cartItems); //@DEBUG
-
+  const renderItems = ({ item }) => {
     return (
-        <Screen>
-            <Text>Shopping Cart Screen!</Text>
-        </Screen>
-    )
-};
+      <ProductCard
+      item={item}
+      onRemove={removeItemFromCart}
+      isEditable={true}
+      hasRemoveButton={true}
+      />
+    );
+  };
+
+  return (
+    <Screen>
+      <FlatList data={cartItems} renderItem={renderItems} keyExtractor={(item) => item.id} />
+    </Screen>
+  );
+}
