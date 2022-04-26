@@ -18,7 +18,7 @@ export default function ProductCard(props) {
             {props.hasEditButton && (<Button
               title="Edit"
               onPress={() => {
-                props.navigation.navigate("AddOrEditScreen", {
+                props.navigation.navigate(props.editScreen, {
                   titlePreface: "Edit",
                   item: props.item,
                 });
@@ -28,7 +28,7 @@ export default function ProductCard(props) {
               color={"red"}
               title="Remove"
               onPress={() => {
-                props.onRemoveProduct(props.item.title, props.item.id);
+                props.onRemove(props.item.id, props.item.title);
               }}
             />)}
           </View>
