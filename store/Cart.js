@@ -11,7 +11,10 @@ export const CartProvider = ({ children }) => {
       addItemToCart: (newItem) => {
         let existingItem = cartItems.find((item) => item.id === newItem.id);
         if (!existingItem) {
-          return setCartItems((prevItems) => [...prevItems, newItem]);
+          return setCartItems((prevItems) => [
+            ...prevItems,
+            { ...newItem, quantity: 1 },
+          ]);
         }
         if (existingItem.quantity) {
           const tempArr = {
@@ -23,12 +26,6 @@ export const CartProvider = ({ children }) => {
           };
           return setCartItems(tempArr.cartItems);
         }
-        const tempArr = {
-          cartItems: cartItems.map((item) =>
-            item.id === existingItem.id ? { ...item, quantity: 2 } : item
-          ),
-        };
-        return setCartItems(tempArr.cartItems);
       },
       removeItemFromCart: (id) => {
         let arr = cartItems;
