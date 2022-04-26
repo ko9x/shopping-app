@@ -35,7 +35,7 @@ const MainStackNavigator = ({ navigation }) => {
               size={32}
               color={Colors.primary}
               onPress={() => {
-                navigation.navigate("ShoppingCartScreen");
+                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasRemoveButton: true});
               }}
             />
           ),
