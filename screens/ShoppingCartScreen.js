@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import Screen from "../components/UI/Screen";
 import { CartContext } from "../store/Cart";
 import ProductCard from "../components/ProductCard";
@@ -13,6 +13,12 @@ export default function ShoppingCartScreen() {
 
   const handleDecreaseQuantity = (id) => {
     removeItemFromCart(id);
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}><Text style={{fontSize: 20}}>Your shopping cart is empty</Text></View>
+    )
   }
 
   const renderItems = ({ item }) => {
