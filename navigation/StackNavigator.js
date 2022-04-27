@@ -16,6 +16,14 @@ const MainStackNavigator = ({ navigation }) => {
 
   const {removeItemFromCart} = useContext(CartContext);
 
+  const removeItemHandler = (id) => {
+    if (id) {
+      removeItemFromCart()
+    } else {
+      return
+    }
+  };
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -40,7 +48,7 @@ const MainStackNavigator = ({ navigation }) => {
               size={32}
               color={Colors.primary}
               onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasQuantity: true, onRemove: removeItemFromCart()});
+                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasQuantity: true, onRemove: removeItemHandler()});
               }}
             />
           ),
