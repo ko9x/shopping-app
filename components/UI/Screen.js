@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 
 export default function Screen(props) {
   return (
-    <View style={{ ...styles.container, ...props.style }}>
+    <SafeAreaView style={{ ...styles.container, ...props.style }}>
       {props.children}
-    </View>
+    </SafeAreaView>
   );
 }
 

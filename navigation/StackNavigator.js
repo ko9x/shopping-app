@@ -58,7 +58,6 @@ const MainStackNavigator = ({ navigation }) => {
       <Stack.Screen
         name="ShoppingCartScreen"
         component={ShoppingCartScreen}
-        options={{ title: "Shopping Cart" }}
       />
     </Stack.Navigator>
   );

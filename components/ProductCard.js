@@ -14,7 +14,10 @@ export default function ProductCard(props) {
     <View style={styles.container}>
       <Card>
         <View style={styles.content}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text style={styles.item}>{props.item.title}</Text>
+          {props.hasQuantity && props.item.quantity && <Text style={styles.item}>Total: {(props.item.price * props.item.quantity).toFixed(2)}</Text>}
+          </View>
           <ImageBackground
             source={{ uri: props.item.imageAddress }}
             style={styles.BGImage}
