@@ -5,9 +5,18 @@ import { CartContext } from "../store/Cart";
 import ProductCard from "../components/ProductCard";
 import Colors from "../constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { StackActions } from "@react-navigation/native";
+
+const calculateTotal = (arr) => {
+  const totals = arr.map((item) => item.price * item.quantity);
+  const cartTotal = totals.reduce((x, y) => x + y);
+  const fixedCartTotal = (cartTotal).toFixed(2);
+
+  return fixedCartTotal;
+}
 
 export default function ShoppingCartScreen({ navigation }) {
-  const { cartItems, removeItemFromCart, addItemToCart } =
+  const { cartItems, removeItemFromCart, addItemToCart, clearCart } =
     useContext(CartContext);
 
   const handleIncreaseQuantity = (item) => {
@@ -18,22 +27,42 @@ export default function ShoppingCartScreen({ navigation }) {
     removeItemFromCart(id);
   };
 
+  const handleOrder = () => {
+     fetch('https://react-http-max-54195-default-rtdb.firebaseio.com/orders.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cartItems: cartItems,
+        orderTotal: calculateTotal(cartItems)
+      })
+    }).then((response) => {
+      if (response.status === 200) {
+        clearCart();
+        navigation.dispatch(StackActions.popToTop());
+        navigation.navigate("Orders");
+      } else {
+        throw new Error("Something went wrong");
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+  }
+
   useLayoutEffect(() => {
     if (cartItems.length === 0) {
       navigation.setOptions({
         headerTitle: "Shopping Cart",
       });
     } else {
-      const totals = cartItems.map((item) => item.price * item.quantity);
-      const cartTotal = totals.reduce((x, y) => x + y);
-
-      const fixedCartTotal = (cartTotal).toFixed(2);
 
       navigation.setOptions({
         headerTitle: () => (
           <View style={{alignItems: 'center', marginTop: -10}}>
             <Text style={{fontSize: 18}}>Shopping Cart Total:</Text>
-            <Text style={{fontSize: 18}}>${fixedCartTotal}</Text>
+            <Text style={{fontSize: 18}}>${calculateTotal(cartItems)}</Text>
           </View>
         )
       });
@@ -68,9 +97,11 @@ export default function ShoppingCartScreen({ navigation }) {
         renderItem={renderItems}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity containerStyle={{ width: "60%" }}>
+      <TouchableOpacity containerStyle={{ width: "60%" }} onPress={() => {
+            handleOrder()
+          }}>
         <View style={styles.buttonContainer}>
-          <Button title="Order" />
+          <Button title="Order"/>
         </View>
       </TouchableOpacity>
     </Screen>
