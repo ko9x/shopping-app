@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Button, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
 import Colors from "../constants/Colors";
@@ -19,16 +26,19 @@ export default function DetailScreen({ navigation, route, props }) {
           size={iconSize}
           color={Colors.primary}
           onPress={() => {
-            navigation.navigate("ShoppingCartScreen", { isEditable: true, hasQuantity: true });
+            navigation.navigate("ShoppingCartScreen", {
+              isEditable: true,
+              hasQuantity: true,
+            });
           }}
         />
       ),
-    })
+    });
   }, [iconSize]);
 
   const handleAddItem = (item) => {
     bumpButton();
-    addItemToCart(item)
+    addItemToCart(item);
   };
 
   const bumpButton = () => {
@@ -42,7 +52,7 @@ export default function DetailScreen({ navigation, route, props }) {
     setTimeout(() => {
       setIconSize(32);
     }, 200);
-  }
+  };
 
   return (
     <Screen>
@@ -58,11 +68,24 @@ export default function DetailScreen({ navigation, route, props }) {
       <View style={{ ...styles.body, marginTop: 4 }}>
         <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
       </View>
-      <View style={styles.button}>
-        <Button title="Add to cart" onPress={() => {
+      <TouchableOpacity
+        onPress={() => {
           handleAddItem(item);
-        }} />
-      </View>
+        }}
+      >
+        <View style={styles.button}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: Colors.primary,
+              alignSelf: "center",
+              padding: 8,
+            }}
+          >
+            Add to cart
+          </Text>
+        </View>
+      </TouchableOpacity>
     </Screen>
   );
 }
@@ -88,9 +111,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    position: "absolute",
-    bottom: 50,
-    width: "80%",
+    bottom: -220,
+    width: 300,
     borderRadius: 20,
     borderColor: Colors.primary,
     borderWidth: 1,

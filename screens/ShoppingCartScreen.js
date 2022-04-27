@@ -20,7 +20,6 @@ export default function ShoppingCartScreen({ navigation }) {
 
   useLayoutEffect(() => {
     if (cartItems.length === 0) {
-      console.log('got here', ); //@DEBUG
       navigation.setOptions({
         headerTitle: "Shopping Cart",
       });
@@ -28,11 +27,13 @@ export default function ShoppingCartScreen({ navigation }) {
       const totals = cartItems.map((item) => item.price * item.quantity);
       const cartTotal = totals.reduce((x, y) => x + y);
 
+      const fixedCartTotal = (cartTotal).toFixed(2);
+
       navigation.setOptions({
         headerTitle: () => (
           <View style={{alignItems: 'center', marginTop: -10}}>
             <Text style={{fontSize: 18}}>Shopping Cart Total:</Text>
-            <Text style={{fontSize: 18}}>${cartTotal}</Text>
+            <Text style={{fontSize: 18}}>${fixedCartTotal}</Text>
           </View>
         )
       });
@@ -69,7 +70,7 @@ export default function ShoppingCartScreen({ navigation }) {
       />
       <TouchableOpacity containerStyle={{ width: "60%" }}>
         <View style={styles.buttonContainer}>
-          <Button title="order" />
+          <Button title="Order" />
         </View>
       </TouchableOpacity>
     </Screen>
