@@ -1,4 +1,11 @@
-import { View, Text, ImageBackground, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  Button,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import Card from "./UI/Card";
 
 export default function ProductCard(props) {
@@ -8,7 +15,6 @@ export default function ProductCard(props) {
       <Card>
         <View style={styles.content}>
           <Text style={styles.item}>{props.item.title}</Text>
-          {props.item.quantity && <Text style={styles.item}>{props.item.quantity}</Text>}
           <ImageBackground
             source={{ uri: props.item.imageAddress }}
             style={styles.BGImage}
@@ -16,22 +22,50 @@ export default function ProductCard(props) {
         </View>
         {props.isEditable && (
           <View style={styles.buttonContainer}>
-            {props.hasEditButton && (<Button
-              title="Edit"
-              onPress={() => {
-                props.navigation.navigate(props.editScreen, {
-                  titlePreface: "Edit",
-                  item: props.item,
-                });
-              }}
-            />)}
-            {props.hasRemoveButton && (<Button
-              color={"red"}
-              title="Remove"
-              onPress={() => {
-                props.onRemove(props.item.id, props.item.title);
-              }}
-            />)}
+            {props.hasEditButton && (
+              <Button
+                title="Edit"
+                onPress={() => {
+                  props.navigation.navigate(props.editScreen, {
+                    titlePreface: "Edit",
+                    item: props.item,
+                  });
+                }}
+              />
+            )}
+            {props.hasRemoveButton && (
+              <Button
+                color={"red"}
+                title="Remove"
+                onPress={() => {
+                  props.onRemove(props.item.id, props.item.title);
+                }}
+              />
+            )}
+            {props.hasQuantity && (
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                  alignItems: 'center'
+                }}
+              >
+                <Button
+                  title=" - "
+                  onPress={() => {
+                    props.onDecreaseQuantity(props.item.id)
+                  }}
+                />
+                <View><Text>Qty: {props.item.quantity}</Text></View>
+                <Button
+                  title=" + "
+                  onPress={() => {
+                    props.onIncreaseQuantity(props.item)
+                  }}
+                />
+              </View>
+            )}
           </View>
         )}
       </Card>

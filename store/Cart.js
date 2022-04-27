@@ -29,8 +29,21 @@ export const CartProvider = ({ children }) => {
       },
       removeItemFromCart: (id) => {
         let arr = cartItems;
-        const filteredArr = arr.filter((item) => item.id !== id);
-        setCartItems(filteredArr);
+        const selectedItem = arr.find((item) => item.id === id);
+        if (selectedItem.quantity === 1) {
+          const filteredArr = arr.filter((item) => item.id !== selectedItem.id);
+          setCartItems(filteredArr);
+        }
+        if (selectedItem && selectedItem.quantity > 1) {
+          const tempArr = {
+            cartItems: cartItems.map((item) =>
+              item.id === selectedItem.id
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            ),
+          };
+          return setCartItems(tempArr.cartItems);
+        }
       },
     };
   });

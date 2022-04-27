@@ -19,7 +19,7 @@ export default function DetailScreen({ navigation, route, props }) {
           size={iconSize}
           color={Colors.primary}
           onPress={() => {
-            navigation.navigate("ShoppingCartScreen", { isEditable: true, hasRemoveButton: true });
+            navigation.navigate("ShoppingCartScreen", { isEditable: true, hasQuantity: true });
           }}
         />
       ),

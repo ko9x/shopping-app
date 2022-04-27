@@ -40,7 +40,7 @@ const MainStackNavigator = ({ navigation }) => {
               size={32}
               color={Colors.primary}
               onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasRemoveButton: true, onRemove: removeItemFromCart()});
+                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasQuantity: true, onRemove: removeItemFromCart()});
               }}
             />
           ),
