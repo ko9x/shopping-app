@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button } from "react-native";
+import { Button, View, TouchableOpacity } from "react-native";
 import ShopScreen from "../screens/ShopScreen";
 import DetailScreen from "../screens/DetailScreen";
 import ShoppingCartScreen from "../screens/ShoppingCartScreen";
@@ -10,19 +10,10 @@ import Colors from "../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useContext } from "react";
 import { CartContext } from "../store/Cart";
-
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => {
   const { removeItemFromCart } = useContext(CartContext);
-
-  const removeItemHandler = (id) => {
-    if (id) {
-      removeItemFromCart();
-    } else {
-      return;
-    }
-  };
 
   return (
     <Stack.Navigator>
@@ -39,20 +30,6 @@ const MainStackNavigator = ({ navigation }) => {
               color={Colors.primary}
               onPress={() => {
                 navigation.toggleDrawer();
-              }}
-            />
-          ),
-          headerRight: () => (
-            <Ionicons
-              name="ios-cart"
-              size={32}
-              color={Colors.primary}
-              onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {
-                  isEditable: true,
-                  hasQuantity: true,
-                  onRemove: removeItemHandler(),
-                });
               }}
             />
           ),

@@ -17,11 +17,11 @@ import {
   useState,
 } from "react";
 import { CartContext } from "../store/Cart";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import CartButton from "../components/CartButton";
 
 export default function DetailScreen({ navigation, route, props }) {
   const { item, canAddToCart } = route.params;
-  const { addItemToCart } = useContext(CartContext);
+  const { addItemToCart, cartQuantity } = useContext(CartContext);
   const [iconSize, setIconSize] = useState(32);
 
   useLayoutEffect(() => {
@@ -29,21 +29,11 @@ export default function DetailScreen({ navigation, route, props }) {
       canAddToCart &&
         navigation.setOptions({
           headerRight: () => (
-            <Ionicons
-              name="ios-cart"
-              size={iconSize}
-              color={Colors.primary}
-              onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {
-                  isEditable: true,
-                  hasQuantity: true,
-                });
-              }}
-            />
+            <CartButton cartQuantity={cartQuantity} iconSize={iconSize}/>
           ),
         });
     }
-  }, [iconSize]);
+  }, [iconSize, cartQuantity]);
 
   const handleAddItem = (item) => {
     bumpButton();
@@ -51,12 +41,12 @@ export default function DetailScreen({ navigation, route, props }) {
   };
 
   const bumpButton = () => {
-    setIconSize(37);
+    setIconSize(33);
     setTimeout(() => {
-      setIconSize(38);
+      setIconSize(34);
     }, 100);
     setTimeout(() => {
-      setIconSize(40);
+      setIconSize(35);
     }, 100);
     setTimeout(() => {
       setIconSize(32);

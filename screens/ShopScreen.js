@@ -1,10 +1,11 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
 import {
   ScrollView,
   TouchableOpacity,
   FlatList,
   SafeAreaView,
   Alert,
+  View,
 } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
@@ -12,10 +13,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ProductCard from "../components/ProductCard";
+import { CartContext } from "../store/Cart";
+import CartButton from "../components/CartButton";
 
 export default function ShopScreen({ navigation, route, props }) {
   const { isEditable } = route.params ? route.params : false;
   const [products, setProducts] = useState([]);
+  const { cartQuantity } = useContext(CartContext);
 
   const getProducts = async () => {
     const response = await fetch(
@@ -36,6 +40,14 @@ export default function ShopScreen({ navigation, route, props }) {
       });
     }
     setProducts(arr);
+  };
+
+  const removeItemHandler = (id) => {
+    if (id) {
+      removeItemFromCart();
+    } else {
+      return;
+    }
   };
 
   const removeProduct = async (id) => {
@@ -100,8 +112,14 @@ export default function ShopScreen({ navigation, route, props }) {
           />
         ),
       });
+    } else {
+      navigation.setOptions({
+        headerRight: () => (
+          <CartButton onRemove={removeItemHandler()} cartQuantity={cartQuantity} iconSize={32}/>
+        ),
+      });
     }
-  }, [isEditable]);
+  }, [isEditable, cartQuantity]);
 
   const renderItem = ({ item }) => (
     <SafeAreaView>
@@ -111,7 +129,7 @@ export default function ShopScreen({ navigation, route, props }) {
             ? navigation.navigate("DetailScreen", {
                 item: item,
                 itemTitle: item.title,
-                canAddToCart: true
+                canAddToCart: true,
               })
             : navigation.navigate("AddOrEditScreen", {
                 titlePreface: "Edit",
