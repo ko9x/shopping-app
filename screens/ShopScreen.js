@@ -108,9 +108,10 @@ export default function ShopScreen({ navigation, route, props }) {
       <TouchableOpacity
         onPress={() =>
           !isEditable
-            ? navigation.navigate("DetailsScreen", {
+            ? navigation.navigate("DetailScreen", {
                 item: item,
                 itemTitle: item.title,
+                canAddToCart: true
               })
             : navigation.navigate("AddOrEditScreen", {
                 titlePreface: "Edit",

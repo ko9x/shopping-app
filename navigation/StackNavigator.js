@@ -58,7 +58,7 @@ const MainStackNavigator = ({ navigation }) => {
           ),
         }}
       />
-      <Stack.Screen name="DetailsScreen" component={DetailScreen} />
+      <Stack.Screen name="DetailScreen" component={DetailScreen} />
       <Stack.Screen name="ShoppingCartScreen" component={ShoppingCartScreen} />
     </Stack.Navigator>
   );
@@ -115,6 +115,13 @@ const OrdersStackNavigator = ({ navigation }) => {
         component={OrderDetailScreen}
         options={{
           title: "Order Details",
+        }}
+      />
+      <Stack.Screen
+        name="OrderItemDetailScreen"
+        component={DetailScreen}
+        options={{
+          title: "",
         }}
       />
     </Stack.Navigator>

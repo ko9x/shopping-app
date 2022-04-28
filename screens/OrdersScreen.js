@@ -56,7 +56,7 @@ export default function OrdersScreen({navigation}) {
       </View>
     ));
     return (
-      <TouchableOpacity onPress={() => {navigation.navigate('OrderDetailScreen', {item})}}>
+      <TouchableOpacity onPress={() => {navigation.navigate('OrderDetailScreen', {order: item})}}>
         <View
           key={item.id}
           style={{

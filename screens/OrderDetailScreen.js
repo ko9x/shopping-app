@@ -1,25 +1,23 @@
 import { Text } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import ProductCard from "../components/ProductCard";
 import Screen from "../components/UI/Screen";
 
-export default function OrderDetailScreen({route}) {
-    const {items} = route.params;
+export default function OrderDetailScreen({route, navigation}) {
+    const {order} = route.params;
 
     const renderItems = ({item}) => {
        return (
-        <ProductCard
-        item={item}
-      />
+       <TouchableOpacity onPress={() => {navigation.navigate("OrderItemDetailScreen", {item, canAddToCart: false})}}>
+         <ProductCard item={item} hasQuantity={true}/>
+       </TouchableOpacity>
        )
     };
 
   return (
     <Screen>
-      <Text>Order Detail Screen!</Text>
-      
       <FlatList 
-       data={items}
+       data={order.order}
        renderItem={renderItems}
        keyExtractor={item => item.id}
       />

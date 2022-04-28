@@ -20,26 +20,29 @@ import { CartContext } from "../store/Cart";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function DetailScreen({ navigation, route, props }) {
-  const { item } = route.params;
+  const { item, canAddToCart } = route.params;
   const { addItemToCart } = useContext(CartContext);
   const [iconSize, setIconSize] = useState(32);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Ionicons
-          name="ios-cart"
-          size={iconSize}
-          color={Colors.primary}
-          onPress={() => {
-            navigation.navigate("ShoppingCartScreen", {
-              isEditable: true,
-              hasQuantity: true,
-            });
-          }}
-        />
-      ),
-    });
+    {
+      canAddToCart &&
+        navigation.setOptions({
+          headerRight: () => (
+            <Ionicons
+              name="ios-cart"
+              size={iconSize}
+              color={Colors.primary}
+              onPress={() => {
+                navigation.navigate("ShoppingCartScreen", {
+                  isEditable: true,
+                  hasQuantity: true,
+                });
+              }}
+            />
+          ),
+        });
+    }
   }, [iconSize]);
 
   const handleAddItem = (item) => {
@@ -76,24 +79,26 @@ export default function DetailScreen({ navigation, route, props }) {
           <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
         </View>
       </Screen>
-      <TouchableOpacity
-        onPress={() => {
-          handleAddItem(item);
-        }}
-      >
-        <View style={styles.button}>
-          <Text
-            style={{
-              fontSize: 20,
-              color: Colors.primary,
-              alignSelf: "center",
-              padding: 8,
-            }}
-          >
-            Add to cart
-          </Text>
-        </View>
-      </TouchableOpacity>
+      {canAddToCart && (
+        <TouchableOpacity
+          onPress={() => {
+            handleAddItem(item);
+          }}
+        >
+          <View style={styles.button}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: Colors.primary,
+                alignSelf: "center",
+                padding: 8,
+              }}
+            >
+              Add to cart
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
     </Fragment>
   );
 }
