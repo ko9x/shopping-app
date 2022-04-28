@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
-import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ProductCard from "../components/ProductCard";

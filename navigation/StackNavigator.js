@@ -4,23 +4,23 @@ import ShopScreen from "../screens/ShopScreen";
 import DetailScreen from "../screens/DetailScreen";
 import ShoppingCartScreen from "../screens/ShoppingCartScreen";
 import AddOrEditProductScreen from "../screens/AddOrEditProductScreen";
+import OrdersScreen from "../screens/OrdersScreen";
+import OrderDetailScreen from "../screens/OrderDetailScreen";
 import Colors from "../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
 import { CartContext } from "../store/Cart";
 
 const Stack = createNativeStackNavigator();
 
 const MainStackNavigator = ({ navigation }) => {
-
-  const {removeItemFromCart} = useContext(CartContext);
+  const { removeItemFromCart } = useContext(CartContext);
 
   const removeItemHandler = (id) => {
     if (id) {
-      removeItemFromCart()
+      removeItemFromCart();
     } else {
-      return
+      return;
     }
   };
 
@@ -29,7 +29,7 @@ const MainStackNavigator = ({ navigation }) => {
       <Stack.Screen
         name="ShopScreen"
         component={ShopScreen}
-        initialParams={{isEditable: false}}
+        initialParams={{ isEditable: false }}
         options={{
           title: "Shop",
           headerLeft: () => (
@@ -48,17 +48,18 @@ const MainStackNavigator = ({ navigation }) => {
               size={32}
               color={Colors.primary}
               onPress={() => {
-                navigation.navigate("ShoppingCartScreen", {isEditable: true, hasQuantity: true, onRemove: removeItemHandler()});
+                navigation.navigate("ShoppingCartScreen", {
+                  isEditable: true,
+                  hasQuantity: true,
+                  onRemove: removeItemHandler(),
+                });
               }}
             />
           ),
         }}
       />
       <Stack.Screen name="DetailsScreen" component={DetailScreen} />
-      <Stack.Screen
-        name="ShoppingCartScreen"
-        component={ShoppingCartScreen}
-      />
+      <Stack.Screen name="ShoppingCartScreen" component={ShoppingCartScreen} />
     </Stack.Navigator>
   );
 };
@@ -69,7 +70,7 @@ const ProductsStackNavigator = ({ navigation }) => {
       <Stack.Screen
         name="ManageProductsScreen"
         component={ShopScreen}
-        initialParams={{isEditable: true}}
+        initialParams={{ isEditable: true }}
         options={{
           title: "Manage Products",
           headerLeft: () => (
@@ -89,4 +90,35 @@ const ProductsStackNavigator = ({ navigation }) => {
   );
 };
 
-export { MainStackNavigator, ProductsStackNavigator };
+const OrdersStackNavigator = ({ navigation }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="OrdersScreen"
+        component={OrdersScreen}
+        options={{
+          title: "Orders",
+          headerLeft: () => (
+            <Ionicons
+              name="ios-menu"
+              size={32}
+              color={Colors.primary}
+              onPress={() => {
+                navigation.toggleDrawer();
+              }}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="OrderDetailScreen"
+        component={OrderDetailScreen}
+        options={{
+          title: "Order Details",
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+export { MainStackNavigator, ProductsStackNavigator, OrdersStackNavigator };

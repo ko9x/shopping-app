@@ -1,6 +1,10 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { DefaultTheme, DrawerActions } from "@react-navigation/native";
-import { MainStackNavigator, ProductsStackNavigator } from "./StackNavigator";
+import {
+  MainStackNavigator,
+  OrdersStackNavigator,
+  ProductsStackNavigator,
+} from "./StackNavigator";
 import OrdersScreen from "../screens/OrdersScreen";
 import ShopScreen from "../screens/ShopScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,22 +20,15 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Shop"
         component={MainStackNavigator}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Drawer.Screen
         name="Orders"
-        component={OrdersScreen}
+        component={OrdersStackNavigator}
         options={{
-          headerLeft: () => (
-            <Ionicons
-              name="ios-menu"
-              size={32}
-              color={Colors.primary}
-              onPress={() => {
-                navigation.dispatch(DrawerActions.toggleDrawer());
-              }}
-            />
-          ),
+          headerShown: false,
         }}
       />
       <Drawer.Screen
