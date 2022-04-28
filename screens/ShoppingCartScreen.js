@@ -6,6 +6,7 @@ import ProductCard from "../components/ProductCard";
 import Colors from "../constants/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StackActions } from "@react-navigation/native";
+import moment from "moment";
 
 const calculateTotal = (arr) => {
   const totals = arr.map((item) => item.price * item.quantity);
@@ -16,8 +17,12 @@ const calculateTotal = (arr) => {
 }
 
 export default function ShoppingCartScreen({ navigation }) {
-  const { cartItems, removeItemFromCart, addItemToCart, clearCart } =
-    useContext(CartContext);
+  const {
+    cartItems,
+    removeItemFromCart,
+    addItemToCart,
+    clearCart,
+  } = useContext(CartContext);
 
   const handleIncreaseQuantity = (item) => {
     addItemToCart(item);
@@ -27,29 +32,36 @@ export default function ShoppingCartScreen({ navigation }) {
     removeItemFromCart(id);
   };
 
+  const now = moment().format("YYYY-MM-DD hh:mm:ss")
+
   const handleOrder = () => {
-     fetch('https://react-http-max-54195-default-rtdb.firebaseio.com/orders.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        cartItems: cartItems,
-        orderTotal: calculateTotal(cartItems)
-      })
-    }).then((response) => {
-      if (response.status === 200) {
-        clearCart();
-        navigation.dispatch(StackActions.popToTop());
-        navigation.navigate("Orders");
-      } else {
-        throw new Error("Something went wrong");
+    fetch(
+      "https://react-http-max-54195-default-rtdb.firebaseio.com/orders.json",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cartItems: cartItems,
+          orderTotal: calculateTotal(cartItems),
+          orderDate: now,
+        }),
       }
-    })
-    .catch((error) => {
-      console.log("error", error);
-    });
-  }
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          clearCart();
+          navigation.dispatch(StackActions.popToTop());
+          navigation.navigate("Orders");
+        } else {
+          throw new Error("Something went wrong");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
 
   useLayoutEffect(() => {
     if (cartItems.length === 0) {
@@ -57,14 +69,13 @@ export default function ShoppingCartScreen({ navigation }) {
         headerTitle: "Shopping Cart",
       });
     } else {
-
       navigation.setOptions({
         headerTitle: () => (
-          <View style={{alignItems: 'center', marginTop: -10}}>
-            <Text style={{fontSize: 18}}>Shopping Cart Total:</Text>
-            <Text style={{fontSize: 18}}>${calculateTotal(cartItems)}</Text>
+          <View style={{ alignItems: "center", marginTop: -10 }}>
+            <Text style={{ fontSize: 18 }}>Shopping Cart Total:</Text>
+            <Text style={{ fontSize: 18 }}>${calculateTotal(cartItems)}</Text>
           </View>
-        )
+        ),
       });
     }
   }, [cartItems]);
@@ -97,11 +108,14 @@ export default function ShoppingCartScreen({ navigation }) {
         renderItem={renderItems}
         keyExtractor={(item) => item.id}
       />
-      <TouchableOpacity containerStyle={{ width: "60%" }} onPress={() => {
-            handleOrder()
-          }}>
+      <TouchableOpacity
+        containerStyle={{ width: "60%" }}
+        onPress={() => {
+          handleOrder();
+        }}
+      >
         <View style={styles.buttonContainer}>
-          <Button title="Order"/>
+          <Button title="Order" />
         </View>
       </TouchableOpacity>
     </Screen>
