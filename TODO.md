@@ -1,4 +1,6 @@
 # What's next
+* Figure out a good way to show the cartQuantity on the cart icon
+    * materialCommunityIcons cart-arrow-down was promising
 
 
 # Bugs
