@@ -20,6 +20,8 @@ export default function OrdersScreen(props) {
       arr.push({
         id: key,
         order: data[key].cartItems,
+        orderTotal: data[key].orderTotal,
+        orderDate: data[key].orderDate
       });
     }
 
@@ -27,27 +29,34 @@ export default function OrdersScreen(props) {
   };
 
   useFocusEffect(
-      useCallback(() => {
-        getOrders();
-      },[])
-  )
-
-//   useEffect(() => {
-//     getOrders();
-//   }, []);
+    useCallback(() => {
+      getOrders();
+    }, [])
+  );
 
   const renderItems = ({ item }) => {
-    console.log("item", item.order); //@DEBUG
     const itemsDisplay = item.order.map((item) => (
-      <View key={item.id} style={{paddingTop: 5, flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text>Name: {item.title}</Text>
-        <Text> Qty: {item.quantity}</Text>
+      <View key={item.id}>
+        <View
+          style={{
+            paddingTop: 5,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text>Item Name: {item.title}</Text>
+          <Text> Qty: {item.quantity}</Text>
+        </View>
       </View>
     ));
     return (
-      <View style={{paddingVertical: 20}}>
-        <Text>Order number: {item.id}</Text>
+      <View key={item.id} style={{ paddingVertical: 20, borderBottomColor: 'black', borderBottomWidth: 2 }}>
+        <View style={{borderBottomWidth: 1, borderBottomColor: 'black'}}>
+        <Text style={{fontWeight: 'bold'}} >Order ID: {item.id}</Text>
+        <Text style={{fontWeight: 'bold'}} >Order Date: {item.orderDate}</Text>
+        </View>
         {itemsDisplay}
+        <Text key={item.id} style={{alignSelf: 'center', paddingTop: 20}}>Order Total: {item.orderTotal}</Text>
       </View>
     );
   };
@@ -57,7 +66,7 @@ export default function OrdersScreen(props) {
       <FlatList
         data={orders}
         renderItem={renderItems}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
       />
     </Screen>
   );
