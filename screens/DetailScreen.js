@@ -9,7 +9,13 @@ import {
 import Screen from "../components/UI/Screen";
 import Card from "../components/UI/Card";
 import Colors from "../constants/Colors";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import {
+  Fragment,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { CartContext } from "../store/Cart";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -55,19 +61,21 @@ export default function DetailScreen({ navigation, route, props }) {
   };
 
   return (
-    <Screen>
-      <Card style={{ position: "absolute", top: 5 }}>
-        <ImageBackground
-          source={{ uri: item.imageAddress }}
-          style={styles.BGImage}
-        />
-      </Card>
-      <View style={styles.body}>
-        <Text style={styles.text}>{item.description}</Text>
-      </View>
-      <View style={{ ...styles.body, marginTop: 4 }}>
-        <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
-      </View>
+    <Fragment>
+      <Screen>
+        <Card style={{ position: "absolute", top: 5 }}>
+          <ImageBackground
+            source={{ uri: item.imageAddress }}
+            style={styles.BGImage}
+          />
+        </Card>
+        <View style={styles.body}>
+          <Text style={styles.text}>{item.description}</Text>
+        </View>
+        <View style={{ ...styles.body, marginTop: 4 }}>
+          <Text style={styles.text}>${Number(item.price).toFixed(2)}</Text>
+        </View>
+      </Screen>
       <TouchableOpacity
         onPress={() => {
           handleAddItem(item);
@@ -86,7 +94,7 @@ export default function DetailScreen({ navigation, route, props }) {
           </Text>
         </View>
       </TouchableOpacity>
-    </Screen>
+    </Fragment>
   );
 }
 
@@ -111,10 +119,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-    bottom: -220,
     width: 300,
     borderRadius: 20,
     borderColor: Colors.primary,
     borderWidth: 1,
+    bottom: 35,
+    left: 45,
   },
 });
